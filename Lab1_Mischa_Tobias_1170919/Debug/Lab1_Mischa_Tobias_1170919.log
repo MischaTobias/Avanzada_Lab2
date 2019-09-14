@@ -1,0 +1,4 @@
+﻿  Recursividad.cpp
+c:\users\mischa\source\repos\lab1_mischa_tobias_1170919\lab1_mischa_tobias_1170919\recursividad.cpp(58): warning C4018: '<': no coinciden signed/unsigned
+c:\users\mischa\source\repos\lab1_mischa_tobias_1170919\lab1_mischa_tobias_1170919\recursividad.cpp(61): error C2039: 'ToInt32': no es un miembro de 'System::Char'
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets(423,5): error MSB6006: "CL.exe" salió con el código 2.
