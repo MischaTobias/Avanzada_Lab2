@@ -10,7 +10,7 @@ public:
 	////void obtenerTextoArchivo(System::String^ruta);
 	System::String^ Binario(int num);
 	System::String^ CambiarBase(int num, int basedestino);
-	int ConvertDecimal(System::String^ num1, int num, int baseactual);
+	int ConvertDecimal(System::String^ num1, int num, int num2, int baseactual);
 	int Multiplicacion(int num, int num2);
 	bool Palindromo(System::String^ palabra, int pos);
 };

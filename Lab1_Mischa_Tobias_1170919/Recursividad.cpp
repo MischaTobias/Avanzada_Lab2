@@ -46,19 +46,26 @@ System::String^ Recursividad::Binario(int num) {
 }
 
 System::String^ Recursividad::CambiarBase(int num, int basedestino) {
-	if (num == 1) {
-		return "1";
+	if (num < basedestino) {
+		return System::Convert::ToString(num);
 	}
-	else {
-		return (CambiarBase(num / basedestino, basedestino) + System::Convert::ToString((num % basedestino)));
-	}
+	int currentNum = num % basedestino;
+	int newNum = num / basedestino;
+	return (CambiarBase(newNum, basedestino) + System::Convert::ToString((currentNum)));
 }
 
-int Recursividad::ConvertDecimal(System::String^ num1, int num, int baseactual) {
-	for (size_t i = 0; i < num1->Length-1; i++)
+int Recursividad::ConvertDecimal(System::String^ num1, int num, int num2, int baseactual) {
+	//num1->Split();
+	char currentChar;
+	int currentValue;
+	for (int i = 0; i < num1->Length; i++)
 	{
 		//if (num1[i] != ".")
-		num += System::Convert::ToInt32(num1[i])*Potencia(baseactual, (num1->Length-1-i));
+		currentChar = num1[i];
+		currentValue = currentChar - '0';
+
+		num2 = System::Convert::ToInt32(currentValue);
+		num += num2 * Potencia(baseactual, num1->Length - 1 - i);
 	}
 
 	return num;

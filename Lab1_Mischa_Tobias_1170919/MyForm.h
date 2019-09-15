@@ -544,8 +544,13 @@ private: System::Void btnConvertirBase_Click(System::Object^  sender, System::Ev
 	int baseactual = System::Convert::ToInt32(txtBaseActual->Text);
 	int basedestino = System::Convert::ToInt32(txtBaseDestino->Text);
 	Recursividad^ recursividadOBj = gcnew Recursividad();
-	int num1 = recursividadOBj->ConvertDecimal(numconversion, 0, baseactual);
-	lblResConversion->Text = recursividadOBj->CambiarBase(num1, basedestino);
+	int num1 = recursividadOBj->ConvertDecimal(numconversion, 0, 0, baseactual);
+
+	if (basedestino == 10) {
+		lblResConversion->Text = System::Convert::ToString(num1);
+	}	else {
+		lblResConversion->Text = recursividadOBj->CambiarBase(num1, basedestino);
+	}
 }
 };
 }
