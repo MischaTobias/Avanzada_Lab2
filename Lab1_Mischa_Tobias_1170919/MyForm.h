@@ -47,8 +47,8 @@ namespace Lab1MischaTobias1170919 {
 	private: System::Windows::Forms::Label^  lblResultado;
 	private: System::Windows::Forms::Button^  btnBinario;
 	private: System::Windows::Forms::Button^  btnPalíndromas;
-	private: System::Windows::Forms::Label^  label2;
-	private: System::Windows::Forms::TextBox^  txtPalabra;
+
+
 
 	private: System::Windows::Forms::TabControl^  tabControl1;
 	private: System::Windows::Forms::TabPage^  tabPage1;
@@ -98,8 +98,6 @@ namespace Lab1MischaTobias1170919 {
 			this->lblResultado = (gcnew System::Windows::Forms::Label());
 			this->btnBinario = (gcnew System::Windows::Forms::Button());
 			this->btnPalíndromas = (gcnew System::Windows::Forms::Button());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->txtPalabra = (gcnew System::Windows::Forms::TextBox());
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
@@ -195,29 +193,13 @@ namespace Lab1MischaTobias1170919 {
 			// 
 			// btnPalíndromas
 			// 
-			this->btnPalíndromas->Location = System::Drawing::Point(248, 190);
+			this->btnPalíndromas->Location = System::Drawing::Point(14, 191);
 			this->btnPalíndromas->Name = L"btnPalíndromas";
 			this->btnPalíndromas->Size = System::Drawing::Size(154, 31);
 			this->btnPalíndromas->TabIndex = 7;
 			this->btnPalíndromas->Text = L"Palíndromas";
 			this->btnPalíndromas->UseVisualStyleBackColor = true;
 			this->btnPalíndromas->Click += gcnew System::EventHandler(this, &MyForm::btnPalíndromas_Click);
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(11, 167);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(146, 13);
-			this->label2->TabIndex = 8;
-			this->label2->Text = L"Por favor ingrese una palabra";
-			// 
-			// txtPalabra
-			// 
-			this->txtPalabra->Location = System::Drawing::Point(248, 164);
-			this->txtPalabra->Name = L"txtPalabra";
-			this->txtPalabra->Size = System::Drawing::Size(154, 20);
-			this->txtPalabra->TabIndex = 9;
 			// 
 			// tabControl1
 			// 
@@ -270,8 +252,6 @@ namespace Lab1MischaTobias1170919 {
 			this->tabPage2->Controls->Add(this->label4);
 			this->tabPage2->Controls->Add(this->label3);
 			this->tabPage2->Controls->Add(this->btnPalíndromas);
-			this->tabPage2->Controls->Add(this->txtPalabra);
-			this->tabPage2->Controls->Add(this->label2);
 			this->tabPage2->Location = System::Drawing::Point(4, 22);
 			this->tabPage2->Name = L"tabPage2";
 			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
@@ -284,7 +264,7 @@ namespace Lab1MischaTobias1170919 {
 			// lblResPalindromo
 			// 
 			this->lblResPalindromo->AutoSize = true;
-			this->lblResPalindromo->Location = System::Drawing::Point(80, 199);
+			this->lblResPalindromo->Location = System::Drawing::Point(80, 165);
 			this->lblResPalindromo->Name = L"lblResPalindromo";
 			this->lblResPalindromo->Size = System::Drawing::Size(10, 13);
 			this->lblResPalindromo->TabIndex = 30;
@@ -293,7 +273,7 @@ namespace Lab1MischaTobias1170919 {
 			// label13
 			// 
 			this->label13->AutoSize = true;
-			this->label13->Location = System::Drawing::Point(11, 199);
+			this->label13->Location = System::Drawing::Point(11, 165);
 			this->label13->Name = L"label13";
 			this->label13->Size = System::Drawing::Size(61, 13);
 			this->label13->TabIndex = 29;
@@ -504,19 +484,49 @@ private: System::Void btnFactorial_Click(System::Object^  sender, System::EventA
 	lblResultado->Text = System::Convert::ToString(recursividadOBj->Factorial(num));
 }
 private: System::Void btnBinario_Click(System::Object^  sender, System::EventArgs^  e) {
-	int num = System::Convert::ToInt32(txtNum->Text);
 	Recursividad^ recursividadOBj = gcnew Recursividad();
-	lblResultado->Text = System::Convert::ToString(recursividadOBj->Binario(num));
+	StreamReader^ streamReader = gcnew StreamReader("...//NumBinarios.txt");
+	String^ contenidoArchivo = streamReader->ReadToEnd();
+	array<String^>^ nums = contenidoArchivo->Split(',');
+	StreamWriter^ streamWriter = gcnew StreamWriter("...//RespuestaBin.txt");
+	String^ resultado = "";
+	for (int i = 0; i < nums->Length; i++)
+	{
+		int nextNum = System::Convert::ToInt32(nums[i]);
+		resultado += System::Convert::ToString(recursividadOBj->Binario(nextNum));
+		if (i != nums->Length-1){
+			resultado += ", ";
+		}
+	}
+	streamWriter->WriteLine(resultado);
+	streamWriter->Close();
+	lblResultado->Text = "El archivo ha sido guardado con éxito.";
 }
 private: System::Void btnPalíndromas_Click(System::Object^  sender, System::EventArgs^  e) {
-	System::String^ palabra = System::Convert::ToString(txtPalabra->Text);
 	Recursividad^ recursividadOBJ = gcnew Recursividad();
-	if (recursividadOBJ->Palindromo(palabra, 0)){
-		lblResPalindromo->Text = "Si es un palíndromo.";
+	StreamReader^ streamReader = gcnew StreamReader("...//Palabras.txt");
+	String^ contenidoArchivo = streamReader->ReadToEnd();
+	array<String^>^ palabras = contenidoArchivo->Split(',');
+	StreamWriter^ streamWriter = gcnew StreamWriter("...//ResPalabras.txt");
+	String^ resultado = "";
+	for (int i = 0; i < palabras->Length; i++)
+	{
+		String^ palabra = palabras[i];
+		if (recursividadOBJ->Palindromo(palabra, 0)) {
+			resultado += "Si es un palíndromo.";
+		}
+		else {
+			resultado += "No es un palíndromo.";
+		}
+		if (i != palabras->Length - 1) {
+			resultado += ", ";
+		}
 	}
-	else {
-		lblResPalindromo->Text = "No es un palíndromo.";
-	}
+	
+	streamWriter->WriteLine(resultado);
+	streamWriter->Close();
+	lblResPalindromo->Text = "El archivo ha sido guardado con éxito.";
+
 
 	////Leer archivo
 	//System::String^ ruta = txtRuta->Text;

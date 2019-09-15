@@ -1,0 +1,1 @@
+Si es un palíndromo., Si es un palíndromo., No es un palíndromo., No es un palíndromo.

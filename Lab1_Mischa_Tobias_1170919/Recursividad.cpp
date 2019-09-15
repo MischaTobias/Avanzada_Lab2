@@ -46,12 +46,21 @@ System::String^ Recursividad::Binario(int num) {
 }
 
 System::String^ Recursividad::CambiarBase(int num, int basedestino) {
-	if (num < basedestino) {
-		return System::Convert::ToString(num);
-	}
 	int currentNum = num % basedestino;
+	System::String^ letters = "ABCDEF";
+	System::String^ let = "";
+	if (currentNum >= 10){
+		currentNum -= 10;
+		let = letters[currentNum].ToString();
+	}
+	else {
+		let = currentNum.ToString();
+	}
 	int newNum = num / basedestino;
-	return (CambiarBase(newNum, basedestino) + System::Convert::ToString((currentNum)));
+	if (num < basedestino) {
+		return System::Convert::ToString(let);
+	}
+	return (CambiarBase(newNum, basedestino) + let);
 }
 
 int Recursividad::ConvertDecimal(System::String^ num1, int num, int num2, int baseactual) {
@@ -62,7 +71,12 @@ int Recursividad::ConvertDecimal(System::String^ num1, int num, int num2, int ba
 	{
 		//if (num1[i] != ".")
 		currentChar = num1[i];
-		currentValue = currentChar - '0';
+		if (currentChar >= 'A'){
+			currentValue = currentChar - 'A' + 10;
+		}
+		else {
+			currentValue = currentChar - '0';
+		}
 
 		num2 = System::Convert::ToInt32(currentValue);
 		num += num2 * Potencia(baseactual, num1->Length - 1 - i);
